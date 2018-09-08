@@ -12,33 +12,33 @@
 </template>
 
 <script>
-    import styled from 'vue-styled-components';
+  import styled from 'vue-styled-components';
 
-    const LinksBlock = styled('div')`
+  const LinksBlock = styled('div')`
       margin-top: 100px
     `;
 
-    export default {
-        name: 'HelloWorld',
+  export default {
+    name: 'HelloWorld',
 
-        components: {
-            LinksBlock
-        },
+    components: {
+      LinksBlock
+    },
 
-        data () {
-          return {
-            msg: 'Welcome to Your Vue.js App',
+    data () {
+      return {
+        msg: 'Welcome to Your Vue.js App',
 
-              title: 'Simple TODO List'
-          }
-        }
-  }
+        title: 'Simple TODO List'
+      };
+    }
+  };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-h1, h2 {
-  font-weight: normal;
-}
+  h1, h2 {
+    font-weight: normal;
+  }
 </style>

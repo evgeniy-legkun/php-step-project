@@ -3,6 +3,8 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
+import VeeValidate from 'vee-validate';
+import VueToastr from '@deveodk/vue-toastr'
 
 import BootstrapVue from 'bootstrap-vue';
 import axios from 'axios';
@@ -16,6 +18,12 @@ Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
 Vue.use(VueAxios, axios);
+Vue.use(VeeValidate);
+Vue.use(VueToastr, {
+  defaultPosition: 'toast-top-right',
+  defaultType: 'info',
+  defaultTimeout: 2500
+});
 
 /* eslint-disable no-new */
 new Vue({

@@ -1,5 +1,7 @@
 <?php
 
-return [
-
+$globalConfiguration = [
+    'isProd' => 'false'
 ];
+
+return $globalConfiguration;
