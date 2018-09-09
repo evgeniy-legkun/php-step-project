@@ -127,9 +127,21 @@
             return;
           }
 
+          const userData = {
+            form_data: {
+              name: this.formData.name,
+              email: this.formData.email,
+              user_name: this.formData.userName,
+              password: this.formData.password
+            }
+          };
+
+          // TODO fix Access-Control_Allow-Headers error
           this.axios({
+            method: 'post',
             url: 'http://todo.local/api/server.php',
-            responseType: 'json'
+            responseType: 'json',
+            data: Object.assign(userData, { add_user: true })
           })
           .then((serverResponse) => {
             const responseData = JSON.stringify(serverResponse.data);
