@@ -1,10 +1,16 @@
 <?php
 
-if (!empty($_POST['add_user']) && $db) {
-    echo 'TEST RESPONSE';
-    print_r($_POST);
+if (!empty($_REQUEST['add_user']) && $db) {
+    $userData = json_decode($_REQUEST['form_data'], true);
+    $isExists = isUserExists($userData, $db);
 
-    $userData = $_POST['form_data'];
+    if ($isExists) {
+        echo json_encode([
+            'result' => false,
+            'errors' => ['email']
+        ]);
+        return;
+    }
 
     $sql = 'INSERT INTO users (name, email, user_name, password)'
         .'VALUES (:name, :email, :user_name, :password)';
@@ -17,6 +23,28 @@ if (!empty($_POST['add_user']) && $db) {
     $result->bindParam(':user_name', $userData['user_name'], PDO::PARAM_STR);
     $result->bindParam(':password', $passwordHash, PDO::PARAM_STR);
 
-    // $responseResult = $result->execute();
-    // return $responseResult;
+    $responseResult = $result->execute();
+
+    echo json_encode([
+        'result' => (bool)$responseResult,
+        'errors' => $responseResult ? [] : ['failed']
+    ]);
+    return;
+}
+
+function isUserExists($userData , $connect) {
+    $userEmail = $userData['email'];
+    $sql = "SELECT id, name FROM users WHERE email='".$userEmail."'";
+
+    $response = $connect->query($sql, PDO::FETCH_ASSOC);
+
+    $dataFromDatabase = array();
+    $i = 0;
+    while ($row = $response->fetch()){
+        $dataFromDatabase[$i]['id'] = $row['id'];
+        $dataFromDatabase[$i]['name'] = $row['name'];
+        $i++;
+    }
+
+    return (bool)count($dataFromDatabase);
 }

@@ -136,28 +136,23 @@
             }
           };
 
-          // TODO fix Access-Control_Allow-Headers error
           this.axios({
-            method: 'post',
+            method: 'get',
             url: 'http://todo.local/api/server.php',
-            responseType: 'json',
-            data: Object.assign(userData, { add_user: true })
+            params: Object.assign(userData, { add_user: true })
           })
           .then((serverResponse) => {
-            const responseData = JSON.stringify(serverResponse.data);
+            const response = serverResponse.data;
 
-            if (responseData.result) {
-              // TODO  redirect to auth page
+            if (response.errors.length !== 0 && response.errors.includes('email')) {
+              this.$toastr('error', 'User with this email is already exists', 'Error');
+              return;
             }
+
+            this.$router.push('/auth');
           });
         });
       }
     }
   };
 </script>
-
-<style scoped>
-  .content {
-
-  }
-</style>
