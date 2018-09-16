@@ -9,14 +9,14 @@
       />
     </div>
     <div>
-      User name :
+      Email :
       <BootstrapInput
-          v-model="formData.userName"
-          name="form_user_name"
-          v-validate="'required'"
+          v-model="formData.email"
+          name="form_email"
+          v-validate="'email|required'"
       />
-      <span v-show="errors.has('form_user_name')" style="color: red;">
-          The field is required<br>
+      <span v-show="errors.has('form_email')" style="color: red;">
+          Email is not valid<br>
         </span>
       Password :
       <BootstrapInput
@@ -58,9 +58,7 @@
         authorize: false,
 
         formData: {
-          name: '',
           email: '',
-          userName: '',
           password: ''
         }
       };
@@ -88,7 +86,7 @@
 
           const userData = {
             form_data: {
-              user_name: this.formData.userName,
+              email: this.formData.email,
               password: this.formData.password
             }
           };
@@ -101,14 +99,17 @@
           .then((serverResponse) => {
             const response = serverResponse.data;
 
-            console.log('auth response ', response);
+            if (response.errors.length !== 0 && response.errors.includes('email')) {
+              this.$toastr('error', 'User with this email is not exists', 'Error');
+              return;
+            }
 
-            // if (response.errors.length !== 0 && response.errors.includes('email')) {
-            //   this.$toastr('error', 'User with this email is already exists', 'Error');
-            //   return;
-            // }
+            if (response.errors.length !== 0 && response.errors.includes('password')) {
+              this.$toastr('error', 'Password is not correct', 'Error');
+              return;
+            }
 
-            // TODO add congratulated modal
+            this.$toastr('success', 'You authorised successfully', 'Success');
           });
         });
       }

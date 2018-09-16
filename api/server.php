@@ -1,5 +1,17 @@
 <?php
 
+if(!isset($_SESSION)){
+    session_start();
+}
+
+if (!isset($_SESSION['count'])) {
+    $_SESSION['count'] = 0;
+} else {
+    $_SESSION['count']++;
+}
+
+print_r($_SESSION['count']);
+
 // global variables
 define('ROOT', dirname(__FILE__));
 

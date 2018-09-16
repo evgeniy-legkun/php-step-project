@@ -15,26 +15,53 @@ if (!empty($_REQUEST['add_user']) && $db) {
     $sql = 'INSERT INTO users (name, email, user_name, password)'
         .'VALUES (:name, :email, :user_name, :password)';
 
-    $passwordHash = password_hash($userData['password'], PASSWORD_DEFAULT);
+    $hashedPassword = getHashPassword($userData['password']);
 
     $result = $db->prepare($sql);
     $result->bindParam(':name', $userData['name'], PDO::PARAM_STR);
     $result->bindParam(':email', $userData['email'], PDO::PARAM_STR);
     $result->bindParam(':user_name', $userData['user_name'], PDO::PARAM_STR);
-    $result->bindParam(':password', $passwordHash, PDO::PARAM_STR);
+    $result->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
 
     $responseResult = $result->execute();
 
-    echo json_encode([
-        'result' => (bool)$responseResult,
-        'errors' => $responseResult ? [] : ['failed']
-    ]);
+    echo json_encode(['result' => (bool)$responseResult, 'errors' => $responseResult ? [] : ['failed']]);
     return;
 }
 
 if (!empty($_REQUEST['auth_user']) && $db) {
-    //
-    echo 'Test auth';
+    $userData = json_decode($_REQUEST['form_data'], true);
+    $isExists = isUserExists($userData, $db);
+
+    if (!$isExists) {
+        echo json_encode([ 'result' => false, 'errors' => ['email'] ]);
+        return;
+    }
+
+    $sql = "SELECT id, email, password ".
+           "FROM users ".
+           "WHERE email='{$userData['email']}'";
+    $response = $db->query($sql, PDO::FETCH_ASSOC);
+    $row = $response->fetch();
+
+    if (!$row) {
+        echo json_encode(['result' => false, 'errors' => ['request']]);
+        return;
+    }
+
+    // Check password
+    $isPasswordValid = password_verify($userData['password'], $row['password']);
+
+    // TODO add fact of auth into session
+    echo json_encode([
+        'result' => $isPasswordValid,
+        'errors' => $isPasswordValid ? [] : ['password']
+    ]);
+    return;
+}
+
+function getHashPassword ($clearPassword) {
+    return password_hash($clearPassword, PASSWORD_DEFAULT);
 }
 
 function isUserExists($userData , $connect) {
