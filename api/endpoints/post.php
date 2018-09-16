@@ -32,6 +32,11 @@ if (!empty($_REQUEST['add_user']) && $db) {
     return;
 }
 
+if (!empty($_REQUEST['auth_user']) && $db) {
+    //
+    echo 'Test auth';
+}
+
 function isUserExists($userData , $connect) {
     $userEmail = $userData['email'];
     $sql = "SELECT id, name FROM users WHERE email='".$userEmail."'";
