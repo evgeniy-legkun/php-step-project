@@ -2,10 +2,10 @@
   <div class="hello">
     <LinksBlock>
       <router-link :to="{ name: 'Authorisation'}">
-        Authorisation
+        {{ $t("index.authorisation") }}
       </router-link>
       <router-link :to="{ name: 'Registration'}" style="margin-left: 50px">
-        Registration
+        {{ $t("index.registration") }}
       </router-link>
     </LinksBlock>
   </div>
@@ -23,6 +23,11 @@
 
     components: {
       LinksBlock
+    },
+
+    created () {
+      console.log('created was called');
+      console.log('CHECK $T', this.$t);
     },
 
     data () {
