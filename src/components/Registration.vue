@@ -9,7 +9,7 @@
       />
     </div>
     <div>
-      Name:
+      {{ $t('registration.name') }} :
       <BootstrapInput
           v-model="formData.name"
           v-validate="'required'"
@@ -18,7 +18,7 @@
       <span v-show="errors.has('form_name')" style="color: red;">
           The field is required<br>
         </span>
-      Email:
+      {{ $t('global_buttons.email') }} :
       <BootstrapInput
           v-model="formData.email"
           v-validate="'email|required'"
@@ -28,7 +28,7 @@
       <span v-show="errors.has('form_email')" style="color: red;">
           Email is not valid<br>
         </span>
-      User name :
+      {{ $t('registration.user_name') }} :
       <BootstrapInput
           v-model="formData.userName"
           name="form_user_name"
@@ -37,7 +37,7 @@
       <span v-show="errors.has('form_user_name')" style="color: red;">
           The field is required<br>
         </span>
-      Password :
+      {{ $t('registration.password') }} :
       <BootstrapInput
           v-model="formData.password"
           name="form_password"
@@ -45,7 +45,9 @@
           v-validate="'min:6|required'"
       />
       <span v-show="errors.has('form_password')" style="color: red;">
-          Password less than 6 characters<br>
+        {{
+          $t('validator.min', { field: this.$t('global_buttons.password'), count: 6})
+        }}<br>
         </span>
     </div>
     <div>
@@ -62,6 +64,7 @@
   import BootstrapButton from 'bootstrap-vue/es/components/button/button';
   import BootstrapModal from 'bootstrap-vue/es/directives/modal/modal';
   import ControlGutter from './ControlGutter';
+  import { EventBus } from '../EventBus';
 
   export default {
     name: 'Registration',
@@ -128,6 +131,10 @@
               this.$toastr('error', 'User with this email is already exists', 'Error');
               return;
             }
+
+            EventBus.$emit('open-modal', {
+              uid: 1
+            });
 
             this.$router.push('/auth');
           });

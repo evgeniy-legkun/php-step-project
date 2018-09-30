@@ -15,7 +15,12 @@ export default {
   },
   registration: {
     title: 'Registration Form',
+    name: 'Name',
+    password: 'Password',
     user_name: 'User Name',
     registration: 'Registration'
+  },
+  validator: {
+    min: '{field} less than {count} characters'
   }
 }

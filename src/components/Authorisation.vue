@@ -9,7 +9,7 @@
       />
     </div>
     <div>
-      Email :
+      {{ $t('global_buttons.email') }} :
       <BootstrapInput
           v-model="formData.email"
           name="form_email"
@@ -18,7 +18,7 @@
       <span v-show="errors.has('form_email')" style="color: red;">
           Email is not valid<br>
         </span>
-      Password :
+      {{ $t('global_buttons.password') }} :
       <BootstrapInput
           v-model="formData.password"
           name="form_password"
@@ -26,12 +26,17 @@
           v-validate="'min:6|required'"
       />
       <span v-show="errors.has('form_password')" style="color: red;">
-          Password less than 6 characters<br>
-        </span>
+        {{
+          $t('validator.min', {
+            field: this.$t('global_buttons.password'),
+            count: 6
+          })
+        }}<br>
+      </span>
     </div>
     <div>
       <BootstrapButton variant="success" @click="authUser">
-        Authorisation
+        {{ $t('authorisation.authorisation') }}
       </BootstrapButton>
     </div>
   </ControlGutter>

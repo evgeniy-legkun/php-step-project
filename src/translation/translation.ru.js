@@ -15,7 +15,12 @@ export default {
   },
   registration: {
     title: 'Форма регистрации',
+    name: 'Имя',
+    password: 'Пароль',
     user_name: 'Имя пользователя',
     registration: 'Регистрация'
+  },
+  validator: {
+    min: '{field} менше чем {count} символов'
   }
 }

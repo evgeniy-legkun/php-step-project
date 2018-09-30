@@ -25,11 +25,6 @@
       LinksBlock
     },
 
-    created () {
-      console.log('created was called');
-      console.log('CHECK $T', this.$t);
-    },
-
     data () {
       return {
         msg: 'Welcome to Your Vue.js App',
