@@ -10,14 +10,12 @@ if (!isset($_SESSION['count'])) {
     $_SESSION['count']++;
 }
 
-print_r($_SESSION['count']);
-
 // global variables
 define('ROOT', dirname(__FILE__));
 
 // global files
-require_once(ROOT . '/components/Autoload.php');
-require_once (ROOT . '/config.php');
+include_once(ROOT . '/components/Autoload.php');
+include_once (ROOT . '/config.php');
 
 header('Content-Type: application/json');
 if ($globalConfiguration['isProd'] === 'false') {

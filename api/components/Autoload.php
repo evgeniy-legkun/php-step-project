@@ -2,7 +2,8 @@
 
 spl_autoload_register(function ($className) {
     $arrayPaths = [
-        '/'
+        '/',
+        '/components/'
     ];
 
     foreach ($arrayPaths as $path) {

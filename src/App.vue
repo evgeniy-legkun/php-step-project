@@ -20,6 +20,7 @@
 <script>
   import FormSelect from 'bootstrap-vue/es/components/form-select/form-select';
   import Modal from 'bootstrap-vue/es/components/modal/modal';
+  import { mapActions } from 'vuex';
   import { EventBus } from './EventBus';
 
   export default {
@@ -37,6 +38,7 @@
     },
 
     created () {
+      this.updateDate();
       EventBus.$on('open-modal', (userId = 0) => {
         this.showModal = true;
       });
@@ -62,6 +64,10 @@
     },
 
     methods: {
+      ...mapActions({
+        updateDate: 'start'
+      }),
+
       changeLocalization (localValue) {
         this.$locale = localValue;
       }

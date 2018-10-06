@@ -10,6 +10,7 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VueI18n from 'vue-i18n';
 import { i18nConfig, toastrConfig } from './config/config';
+import store from './store/index';
 
 // Import global styles
 import 'bootstrap/dist/css/bootstrap.css';
@@ -38,6 +39,7 @@ Object.defineProperty(Vue.prototype, '$locale', {
 new Vue({
   el: '#app',
   router: router,
+  store: store,
   components: { App },
   i18n: i18nObject,
   template: '<App/>'

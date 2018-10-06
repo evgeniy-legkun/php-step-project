@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    {{ localDate }}
     <LinksBlock>
       <router-link :to="{ name: 'Authorisation'}">
         {{ $t("index.authorisation") }}
@@ -13,6 +14,7 @@
 
 <script>
   import styled from 'vue-styled-components';
+  import { mapState  } from 'vuex';
 
   const LinksBlock = styled('div')`
       margin-top: 100px
@@ -23,6 +25,14 @@
 
     components: {
       LinksBlock
+    },
+
+    computed: {
+      ...mapState({
+        localDate: state => {
+          return state.now.format('hh:mm:ss');
+        }
+      })
     },
 
     data () {
@@ -37,7 +47,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
   h1, h2 {
     font-weight: normal;
   }
